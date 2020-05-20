@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Neo.Network.P2P;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 
 namespace Neo
@@ -32,17 +34,47 @@ namespace Neo
             {
                 if (_default == null)
                 {
-                    Console.WriteLine("start to load config file");
-                    UpdateDefault(Utility.LoadConfig("config"));
+                    UpdateDefault(LoadConfig("config"));
                 }
 
                 return _default;
             }
         }
 
+        public static IConfigurationRoot LoadConfig(string config)
+        {
+            var env = Environment.GetEnvironmentVariable("NEO_NETWORK");
+            var configFile = string.IsNullOrWhiteSpace(env) ? $"{config}.json" : $"{config}.{env}.json";
+
+            // Working directory
+            Console.WriteLine("working dir");
+            var file = Path.Combine(Environment.CurrentDirectory, configFile);
+            if (!File.Exists(file))
+            {
+                Console.WriteLine("entrypoint dir");
+                // EntryPoint folder
+                file = Path.Combine(Assembly.GetEntryAssembly().Location, configFile);
+                if (!File.Exists(file))
+                {
+                    Console.WriteLine("neo.dll dir");
+                    // neo.dll folder
+                    file = Path.Combine(Assembly.GetExecutingAssembly().Location, configFile);
+                    if (!File.Exists(file))
+                    {
+                        Console.WriteLine("default dir");
+                        // default config
+                        return new ConfigurationBuilder().Build();
+                    }
+                }
+            }
+            Console.WriteLine("file path: " + file);
+            return new ConfigurationBuilder()
+                .AddJsonFile(file, true)
+                .Build();
+        }
+
         public Settings(IConfigurationSection section)
         {
-            System.Console.WriteLine("section error: " + section.ToString());
             this.Logger = new LoggerSettings(section.GetSection("Logger"));
             this.Storage = new StorageSettings(section.GetSection("Storage"));
             this.P2P = new P2PSettings(section.GetSection("P2P"));
