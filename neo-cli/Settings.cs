@@ -48,16 +48,16 @@ namespace Neo
             var configFile = string.IsNullOrWhiteSpace(env) ? $"{config}.json" : $"{config}.{env}.json";
 
             // Working directory
-            Console.WriteLine("working dir");
+            Console.WriteLine("working dir: " + Environment.CurrentDirectory);
             var file = Path.Combine(Environment.CurrentDirectory, configFile);
             if (!File.Exists(file))
             {
-                Console.WriteLine("entrypoint dir");
+                Console.WriteLine("entrypoint dir: " + Assembly.GetEntryAssembly().Location);
                 // EntryPoint folder
                 file = Path.Combine(Assembly.GetEntryAssembly().Location, configFile);
                 if (!File.Exists(file))
                 {
-                    Console.WriteLine("neo.dll dir");
+                    Console.WriteLine("neo.dll dir: " + Assembly.GetExecutingAssembly().Location);
                     // neo.dll folder
                     file = Path.Combine(Assembly.GetExecutingAssembly().Location, configFile);
                     if (!File.Exists(file))
