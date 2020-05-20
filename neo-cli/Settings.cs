@@ -34,6 +34,7 @@ namespace Neo
             {
                 if (_default == null)
                 {
+                    Console.WriteLine("before load config file....");
                     UpdateDefault(LoadConfig("config"));
                 }
 
