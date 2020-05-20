@@ -54,15 +54,15 @@ namespace Neo
             Console.WriteLine("file: " + file);
             if (!File.Exists(file))
             {
-                Console.WriteLine("entrypoint dir: " + Assembly.GetEntryAssembly().Location + " name => " + Assembly.GetEntryAssembly().GetName());
+                Console.WriteLine("entrypoint dir: " + Assembly.GetEntryAssembly().Location + " name => " + Assembly.GetEntryAssembly().FullName);
                 // EntryPoint folder
-                file = Path.Combine(Assembly.GetEntryAssembly().Location, configFile);
+                file = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), configFile);
                 Console.WriteLine("file: " + file);
                 if (!File.Exists(file))
                 {
-                    Console.WriteLine("neo.dll dir: " + Assembly.GetExecutingAssembly().Location + " name => " + Assembly.GetExecutingAssembly().GetName());
+                    Console.WriteLine("neo.dll dir: " + Assembly.GetExecutingAssembly().Location + " name => " + Assembly.GetExecutingAssembly().FullName);
                     // neo.dll folder
-                    file = Path.Combine(Assembly.GetExecutingAssembly().Location, configFile);
+                    file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), configFile);
                     Console.WriteLine("file: " + file);
                     if (!File.Exists(file))
                     {
