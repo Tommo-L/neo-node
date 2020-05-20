@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Neo.Network.P2P;
+using System;
 using System.Threading;
 
 namespace Neo
@@ -31,6 +32,7 @@ namespace Neo
             {
                 if (_default == null)
                 {
+                    Console.WriteLine("start to load config file");
                     UpdateDefault(Utility.LoadConfig("config"));
                 }
 
@@ -40,6 +42,7 @@ namespace Neo
 
         public Settings(IConfigurationSection section)
         {
+            System.Console.WriteLine("section error: " + section.ToString());
             this.Logger = new LoggerSettings(section.GetSection("Logger"));
             this.Storage = new StorageSettings(section.GetSection("Storage"));
             this.P2P = new P2PSettings(section.GetSection("P2P"));
