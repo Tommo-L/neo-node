@@ -49,6 +49,7 @@ namespace Neo
 
             // Working directory
             Console.WriteLine("working dir: " + Environment.CurrentDirectory);
+            Console.WriteLine("Directory dir: " + System.IO.Directory.GetCurrentDirectory());
             var file = Path.Combine(Environment.CurrentDirectory, configFile);
             if (!File.Exists(file))
             {
