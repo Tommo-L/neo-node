@@ -58,7 +58,7 @@ namespace Neo
                 file = Path.Combine(Assembly.GetEntryAssembly().Location, configFile);
                 if (!File.Exists(file))
                 {
-                    Console.WriteLine("neo.dll dir: " + Assembly.GetExecutingAssembly().Location + " name => " + Assembly.GetEntryAssembly().GetName());
+                    Console.WriteLine("neo.dll dir: " + Assembly.GetExecutingAssembly().Location + " name => " + Assembly.GetExecutingAssembly().GetName());
                     // neo.dll folder
                     file = Path.Combine(Assembly.GetExecutingAssembly().Location, configFile);
                     if (!File.Exists(file))
